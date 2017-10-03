@@ -1,2 +1,0 @@
-class LeadsController < ApplicationController
-end

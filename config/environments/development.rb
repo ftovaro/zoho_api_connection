@@ -36,7 +36,8 @@ Rails.application.configure do
 
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
-
+  ENV['ZOHO_TOKEN'] = "416af38494ac9b2499db14633128ba35"
+  ENV['ZOHO_SEARCH_URL'] = "https://crm.zoho.com/crm/private/json/Leads/searchRecords?authtoken="
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
