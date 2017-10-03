@@ -1,7 +1,19 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'net/http'
+require 'uri'
+
+url = "https://crm.zoho.com/crm/private/json/Leads/getRecords?authtoken=416af38494ac9b2499db14633128ba35&scope=crmapi"
+uri = URI.parse(url)
+http = Net::HTTP.new(uri.host, uri.port)
+http.use_ssl = (uri.scheme == "https")
+response = http.request(Net::HTTP::Get.new(uri.request_uri)).body
+leads = JSON.parse(response)['response']['result']['Leads']['row']
+leads.each do |lead|
+  lead = lead['FL']
+  name = lead.detect {|l| l['val'] == 'First Name'}['content']
+  company = lead.detect {|l| l['val'] == 'Company'}['content']
+  phone = lead.detect {|l| l['val'] == 'Phone'}['content']
+  mobile = lead.detect {|l| l['val'] == 'Mobile'}['content']
+  source = lead.detect {|l| l['val'] == 'Lead Source'}['content']
+  new_lead = Lead.find_or_create_by(name: name, company: company, phone: phone, source: source, mobile: mobile)
+  p "New lead created with name: #{new_lead} and company #{company}"
+end
