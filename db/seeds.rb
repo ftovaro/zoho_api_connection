@@ -9,11 +9,12 @@ response = http.request(Net::HTTP::Get.new(uri.request_uri)).body
 leads = JSON.parse(response)['response']['result']['Leads']['row']
 leads.each do |lead|
   lead = lead['FL']
+  zoho_id = lead.detect {|l| l['val'] == 'LEADID'}['content']
   name = lead.detect {|l| l['val'] == 'First Name'}['content']
   company = lead.detect {|l| l['val'] == 'Company'}['content']
   phone = lead.detect {|l| l['val'] == 'Phone'}['content']
   mobile = lead.detect {|l| l['val'] == 'Mobile'}['content']
   source = lead.detect {|l| l['val'] == 'Lead Source'}['content']
-  new_lead = Lead.find_or_create_by(name: name, company: company, phone: phone, source: source, mobile: mobile)
-  p "New lead created with name: #{new_lead} and company #{company}"
+  new_lead = Lead.find_or_create_by(zoho_id: zoho_id, name: name, company: company, phone: phone, source: source, mobile: mobile)
+  p "New lead created with name: #{name} and company #{company}"
 end
