@@ -32,15 +32,8 @@ class Lead::LeadHandler
     t = Lead.arel_table
     records = handler.default_records_value records
     page = handler.default_page_value page
-    leads = Lead.where(t[:name].matches("%#{name}%"), 
-                       t[:company].matches("%#{company}%"), 
-                       t[:phone].matches("%#{phone}%")).page(page).per(records)
-    if leads.empty?
-      response = handler.search_in_zoho_by_source source, 1, records
-      handler.parse_response response
-    else
-      leads
-    end
+    leads = Lead.where(t[:name].matches("%#{name}%")).where(t[:phone].matches("%#{phone}%")).where(t[:company].matches("%#{company}%")).page(page).per(records)
+    leads
   end
   def search_in_zoho_by_source source, page, records
     handler = Lead::LeadHandler.new
