@@ -7,7 +7,7 @@ First of all, this app was created with **Ruby 2.4.1** and **Rails 5.1.4**. We u
 
 After you have cloned the project, go inside the folder a run `bundle install`, then `rails db:create db:migrate db:seed` as a single command to create the DB, run migrations and fetch some data from ZOHO.
 
-Once done, you can start the server with `rails s`
+Once done, you can start the server with `rails s -p 3001`
 
 ## Pagination ##
 
