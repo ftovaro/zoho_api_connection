@@ -1,5 +1,5 @@
-## ZOHO API Connection ##
-**ZOHO API Connection** is an API where you can search **leads** from ZOHO CRM. You can easily connect with any client (e.g mobile app or front-end app) using this API and manage you leads easily.
+## Zoho API Connection ##
+**Zoho API Connection** is an API where you can search **leads** from Zoho CRM. You can easily connect with any client (e.g mobile app or front-end app) using this API and manage you leads easily.
 
 ## Installation ##
 
@@ -9,18 +9,29 @@ After you have cloned the project, go inside the folder a run `bundle install`, 
 
 Once done, you can start the server with `rails s`
 
+## Pagination ##
+
+All endpoints receive a `records` and `page` param that you can use as pagination for your client.
+
+## Endpoints ##
 ***
 ### Search by name, company or phone ###
+
+With this endpoint you can look for a phone like `555` and it'll bring you all phones that have a coincidence with that number. Not all params are required to do a request.
 
 | url | HTTP method | description | status |
 |---|---|---|---|
 | `/api/v1/leads/search_others?name=James&phone=555&records=1&page=1` | GET | returns leads that meet the search criteria | 200 |
 
-**Request Header**
+**Request params**
 
 | key | value |
 |---|---|
-| **`Content-Type`** | application/json |
+| **`name`** | E.g. `James` |
+| **`company`** | E.g. `Web` |
+| **`phone`** | E.g. `555` |
+| **`records`** | E.g. `2` |
+| **`page`** | E.g. `2` |
 
 **Response headers**
 
@@ -42,5 +53,57 @@ Once done, you can start the server with `rails s`
   "mobile": "555-555-5555",
   "zoho_id": "2788672000000133117"
 }]
+```
+***
+
+### Search by source ###
+
+With this endpoint you can look for a source like `adver` and it'll bring you all source that have a coincidence with that word like `Advertisement`.
+
+| url | HTTP method | description | status |
+|---|---|---|---|
+| `/api/v1/leads/seach_source?source=adver&records=2&page=1` | GET | returns leads that meet the search criteria | 200 |
+
+**Request params**
+
+| key | value |
+|---|---|
+| **`source`** | E.g. `adver` |
+| **`records`** | E.g. `2` |
+| **`page`** | E.g. `1` |
+
+**Response headers**
+
+| key | value |
+|---|---|
+| **`Content-Type`** | application/json; charset=utf-8 |
+
+
+**Response body**
+```javascript
+[
+  {
+    "id": 70,
+    "name": "Carissa",
+    "company": "Oh My Goodknits Inc",
+    "phone": "555-555-5555",
+    "source": "Advertisement",
+    "created_at": "2017-10-07T17:06:00.520Z",
+    "updated_at": "2017-10-07T17:06:00.520Z",
+    "mobile": "555-555-5555",
+    "zoho_id": "2788672000000133118"
+  },
+  {
+    "id": 78,
+    "name": "Chau",
+    "company": "Creative Business Systems",
+    "phone": "555-555-5555",
+    "source": "Advertisement",
+    "created_at": "2017-10-07T17:06:00.573Z",
+    "updated_at": "2017-10-07T17:06:00.573Z",
+    "mobile": "555-555-5555",
+    "zoho_id": "2788672000000133110"
+  }
+]
 ```
 ***
