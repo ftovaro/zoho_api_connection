@@ -13,12 +13,7 @@ class Lead::LeadHandler
     records = handler.default_records_value records
     page = handler.default_page_value page
     leads = Lead.where(t[:source].matches("%#{source}%")).page(page).per(records)
-    if leads.empty?
-      response = handler.search_in_zoho_by_source source, 1, records
-      handler.parse_response response
-    else
-      leads
-    end
+    leads
   end
   def self.search_by_id_and_numbers id, phone, mobile, page, records
     handler = Lead::LeadHandler.new
