@@ -107,3 +107,42 @@ With this endpoint you can look for a source like `adver` and it'll bring you al
 ]
 ```
 ***
+### Submit a lead from Zoho ###
+
+This endpoint allows you to submit a lead from Zoho to this DB using a Zoho ID or a phone number. As a Zoho ID is unique, this endpoint priorize the use of an ID over a phone number. If the lead already exited in DB it'll only return it.
+
+| url | HTTP method | description | status |
+|---|---|---|---|
+| `/api/v1/leads/search_lead?id=2788672000000133118` | GET | returns leads that meet the submit criteria | 200 |
+| `/api/v1/leads/search_lead?phone=555-555-5555` | GET | returns leads that meet the submit criteria | 200 |
+
+**Request params**
+
+| key | value |
+|---|---|
+| **`id`** | E.g. `2788672000000133118` |
+| **`phone`** | E.g. `555-555-5555` |
+| **`mobile`** | E.g. `555-555-5555` |
+
+**Response headers**
+
+| key | value |
+|---|---|
+| **`Content-Type`** | application/json; charset=utf-8 |
+
+
+**Response body**
+```javascript
+[{
+   "id": 70,
+   "name": "Carissa",
+   "company": "Oh My Goodknits Inc",
+   "phone": "555-555-5555",
+   "source": "Advertisement",
+   "created_at": "2017-10-07T17:06:00.520Z",
+   "updated_at": "2017-10-07T17:06:00.520Z",
+   "mobile": "555-555-5555",
+   "zoho_id": "2788672000000133118"
+}]
+```
+***
